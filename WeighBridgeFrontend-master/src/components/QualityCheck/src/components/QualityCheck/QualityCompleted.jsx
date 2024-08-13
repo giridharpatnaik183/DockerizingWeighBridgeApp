@@ -20,7 +20,6 @@ const StyledTable = styled.table`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
-
 function QualityCompleted() {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -29,9 +28,7 @@ function QualityCompleted() {
   const [selectedDate, setSelectedDate] = useState(moment());
   const [selectedMaterial, setSelectedMaterial] = useState("");
   const [selectedTransactionType, setSelectedTransactionType] = useState("");
-
   const componentRef = useRef();
-
   const [filteredData, setFilteredData] = useState([]);
   const [allData, setAllData] = useState([]);
   // const [transactionType, setTransactionType] = useState("inbound"); // Default to 'inbound', adjust as necessary
@@ -40,7 +37,6 @@ function QualityCompleted() {
     return current && current > moment().endOf("day");
   };
   const userId = sessionStorage.getItem("userId");
-
   const inboundLabels = [
     'Ticket No',
     'Company Name',
@@ -52,6 +48,7 @@ function QualityCompleted() {
     'Supplier',
     'SupplierAddress',
     'TransactionType',
+    'Size',
   ];
 
   const outboundLabels = [
@@ -65,9 +62,8 @@ function QualityCompleted() {
     'CustomerName',
     'CustomerAddress',
     'TransactionType',
+    'Size',
   ];
-
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,8 +80,6 @@ function QualityCompleted() {
       setFilteredData(allData);
     }
   }, [searchQuery, allData]);
-
-
 
   const fetchAllTransactions = async () => {
     try {
@@ -117,7 +111,6 @@ function QualityCompleted() {
       return [];
     }
   };
-
 
   const fetchMaterialOptions = async () => {
     try {
@@ -371,6 +364,7 @@ function QualityCompleted() {
         `Supplier/Customer Name: ${data.supplierOrCustomerName}`,
         `Supplier/Customer Address: ${data.supplierOrCustomerAddress}`,
         `Transaction Type: ${data.transactionType}`
+        `Size: ${data.size}`
       ];
 
       doc.setFontSize(14);
@@ -504,6 +498,7 @@ function QualityCompleted() {
                     </tr>`
                 : ""
             }
+            <tr><th>Size</th><td>${data.size}</td></tr>
           </tbody>
         </table>
         <div class="signature-line">

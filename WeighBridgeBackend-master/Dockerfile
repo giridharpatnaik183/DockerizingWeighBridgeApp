@@ -1,5 +1,5 @@
 FROM openjdk:20-jdk-slim
 WORKDIR /app
-COPY target/*.jar app.jar
+COPY target/Weighbridge-0.0.1-SNAPSHOT.war app.war
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java", "-jar", "app.war"]

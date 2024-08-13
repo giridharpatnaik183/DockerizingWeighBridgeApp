@@ -1,28 +1,29 @@
 version: '3'
+
 services:
   frontend:
-    build: ./frontend
+    image: giridharpatnaik183/weighbridge-frontend:latest
     ports:
       - "5173:5173"
     depends_on:
       - backend
 
   backend:
-    build: ./backend
+    image: giridharpatnaik183/weighbridge-backend:latest
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/yourdbname
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/weighbridge_usermanagement
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: yourpassword
+      SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       - db
 
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: yourpassword
-      MYSQL_DATABASE: yourdbname
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: weighbridge_usermanagement
     volumes:
       - mysql-data:/var/lib/mysql
 
