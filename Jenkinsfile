@@ -17,7 +17,7 @@ pipeline {
             steps {
                 // Example: Build Docker image
                 script {
-                    sh 'docker build -t ${DOCKER_IMAGE}:${env.BUILD_NUMBER} .'
+                    bat 'docker build -t %DOCKER_IMAGE%:%BUILD_NUMBER% .'
                 }
             }
         }
