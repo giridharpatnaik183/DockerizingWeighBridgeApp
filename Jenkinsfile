@@ -11,6 +11,7 @@ pipeline {
                 script {
                     // Navigate to the backend directory and build the Docker image
                     dir('WeighBridgeBackend-master') {
+                        bat 'mvn clean package'
                         bat 'docker build -t giridharpatnaik183/weighbridge-backend:latest .'
                     }
                 }
