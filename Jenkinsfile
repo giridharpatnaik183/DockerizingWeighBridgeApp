@@ -1,70 +1,68 @@
 pipeline {
     agent any
-    
-    environment {
-        DOCKER_IMAGE = "giridharpatnaik183/weighbridgeapp"
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                // Checkout code from GitHub
-                git branch: 'main', url: 'https://github.com/giridharpatnaik183/DockerizingWeighBridgeApp.git'
+                checkout scm
             }
         }
-        
-        stage('Build') {
+        stage('Build Backend') {
             steps {
-                // Example: Build Docker image
                 script {
-                    bat 'docker build -t %DOCKER_IMAGE%:%BUILD_NUMBER% .'
+                    // Navigate to the backend directory and build the Docker image
+                    dir('WeighBridgeBackend-master') {
+                        bat 'docker build -t giridharpatnaik183/weighbridge-backend:latest .'
+                    }
                 }
             }
         }
-        
+        stage('Build Frontend') {
+            steps {
+                script {
+                    // Navigate to the frontend directory and build the Docker image
+                    dir('WeighBridgeFrontend-master') {
+                        bat 'docker build -t giridharpatnaik183/weighbridge-frontend:latest .'
+                    }
+                }
+            }
+        }
         stage('Test') {
             steps {
-                // Add steps for testing here
                 echo 'Running tests...'
+                // Add test commands here
             }
         }
-
         stage('Deploy to Dev') {
             when {
-                branch 'main'
+                branch 'dev'
             }
             steps {
-                // Deploy to dev environment
-                echo 'Deploying to Dev...'
+                echo 'Deploying to Dev environment...'
+                // Add deployment steps here
             }
         }
-        
         stage('Deploy to UAT') {
             when {
                 branch 'uat'
             }
             steps {
-                // Deploy to UAT environment
-                echo 'Deploying to UAT...'
+                echo 'Deploying to UAT environment...'
+                // Add deployment steps here
             }
         }
-        
         stage('Deploy to Prod') {
             when {
-                branch 'prod'
+                branch 'main'
             }
             steps {
-                // Deploy to production environment
-                echo 'Deploying to Prod...'
+                echo 'Deploying to Production environment...'
+                // Add deployment steps here
             }
         }
     }
-    
     post {
         always {
-            echo 'Cleaning up...'
-            // Clean up workspace
-            deleteDir()
+            cleanWs() // Clean workspace after the build
         }
     }
 }
