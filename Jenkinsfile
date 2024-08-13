@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from GitHub
-                git branch: 'main', url: 'https://github.com/giridharpatnaik183/DockerizingWeighBridgeApp.git'
+                git branch: 'prod', url: 'https://github.com/giridharpatnaik183/DockerizingWeighBridgeApp.git'
             }
         }
         
