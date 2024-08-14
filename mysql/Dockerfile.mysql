@@ -1,0 +1,9 @@
+# Use the official MySQL image as a base
+FROM mysql:8.0
+
+# Copy the SQL dump file into the container
+COPY Dump20240725.sql /docker-entrypoint-initdb.d/
+
+# Set the environment variables for MySQL
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_DATABASE=weighbridge_usermanagement
